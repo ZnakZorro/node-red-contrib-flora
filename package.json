@@ -1,13 +1,32 @@
 {
-    "name"         : "node-red-contrib-flora",
-    "version"      : "0.0.1",
-    "description"  : "A node-red module for flora",
-    "dependencies": {
-    },
-    "keywords": [ "flora" ],
-    "node-red"     : {
-        "nodes": {
-            "sample": "example/example.json"
-        }
-    }
+	"name": "node-red-contrib-flora",
+	"version": "1.0.0",
+	"description": "Node-red for flora mate",
+	"main": "flora.node.js",
+	"directories": {
+		"example": "example"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ZnakZorro/node-red-contrib-flora.git"
+	},
+	"keywords": [
+		"node-red",
+		"sensors",
+		"flora"
+	],
+	"author": "ZnakZorro",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ZnakZorro/node-red-contrib-flora/issues"
+	},
+	"homepage": "https://github.com/ZnakZorro/node-red-contrib-flora#readme",
+	"node-red": {
+		"nodes": {
+			"flora": "flora.node.js"
+		}
+	}
 }

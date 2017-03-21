@@ -1,1 +1,27 @@
-<p></p>
+
+<script type="text/javascript">
+    RED.nodes.registerType('flora',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"flora";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="flora">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="flora">
+    <p>A simple node that converts the message payloads into all flora characters</p>
+</script>

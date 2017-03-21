@@ -1,5 +1,4 @@
-/*flora.node.js*/
-/* only example from tutorial*/
+
 module.exports = function(RED) {
     function FloraNode(config) {
         RED.nodes.createNode(this,config);
@@ -9,7 +8,7 @@ module.exports = function(RED) {
         this.interval = config.interval;
         var node = this;
         this.on('input', function(msg) {
-            msg.payload = msg.payload.toLowerCase()+' '+this.name+'  '+this.repeat+' '+this.timerepeat+' '+this.interval;
+            msg.payload = msg.payload.toLowerCase()+' @'+this.name+'  '+this.repeat+' '+this.timerepeat+' '+this.interval;
             node.send(msg);
             this.status({fill:"red",shape:"ring",text:"try connect"});
         });

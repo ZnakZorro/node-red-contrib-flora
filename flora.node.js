@@ -9,5 +9,5 @@ module.exports = function(RED) {
             node.send(msg);
         });
     }
-    RED.nodes.registerType("lower-case",LowerCaseNode);
+    RED.nodes.registerType("flora",LowerCaseNode);
 }

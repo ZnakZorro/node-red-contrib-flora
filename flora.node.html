@@ -2,9 +2,9 @@
 <script type="text/javascript">
     RED.nodes.registerType('flora',{
         category: 'function',
-        color: '#ff4422',
+        color: '#ff6622',
         defaults: {
-            name: {value:"aa:bb:..."},
+            name: {value:"aa:bb:cc..."},
             repeat: {value:"5"},
             interval: {value:"30"}
         },
@@ -20,15 +20,19 @@
 <script type="text/x-red" data-template-name="flora">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> BLE ID</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <input type="text" id="node-input-name" placeholder="Mac ID">
     </div>    
     <div class="form-row">
         <label for="node-input-repeat"><i class="icon-tag"></i>Try repeat</label>
-        <input type="text" id="node-input-repeat" value="5" style="width: 50%;">
+        <input type="text" id="node-input-repeat" value="5" style="width: 25%;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-timerepeat"><i class="icon-tag"></i>Time to try</label>
+        <input type="text" id="node-input-timerepeat" value="5" style="width: 25%;">minutes
     </div>
        <div class="form-row">
         <label for="node-input-interval"><i class="icon-tag"></i>Interval</label>
-        <input type="text" id="node-input-interval" value="30" style="width: 50%;"> minute
+        <input type="text" id="node-input-interval" value="30" style="width: 25%;">minutes
     </div>
 	 <div class="form-row" id="node-reg-row">
 		<label>&nbsp;</label>
@@ -38,5 +42,10 @@
 </script>
 
 <script type="text/x-red" data-help-name="flora">
-    <p>Node-red that read data from Xiaomi Flora mat</p>
+    <h3>Node-red that read data from Xiaomi Flora mat</h3>
+    <p>BLE ID = Mac adrress of bluetooth</p>
+    <p>Try repeat = How many times to tray if no result</p>
+    <p>Time to try = Time to tray if no result in [minutes]</p>
+    
+    <p>Interval = Reading data Interal in [minutes]</p>
 </script>

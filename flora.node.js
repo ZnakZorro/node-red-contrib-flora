@@ -3,10 +3,14 @@
 module.exports = function(RED) {
     function FloraNode(config) {
         RED.nodes.createNode(this,config);
+        this.name = config.name;
+        this.repeat = config.repeat;
+        this.interval = config.interval;
         var node = this;
         this.on('input', function(msg) {
-            msg.payload = msg.payload.toLowerCase();
+            msg.payload = msg.payload.toLowerCase() + ' '+this.name + '  '+ this.repeat + '  '+ this.interval;
             node.send(msg);
+            this.status({fill:"red",shape:"ring",text:"try connect"});
         });
     }
     RED.nodes.registerType("flora",FloraNode);

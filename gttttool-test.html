@@ -1,0 +1,105 @@
+<a href="https://www.open-homeautomation.com/de/2016/08/23/reverse-engineering-the-mi-plant-sensor/">https://www.open-homeautomation.com/de/2016/08/23/reverse-engineering-the-mi-plant-sensor/</a><br />
+<div id="info"></div>
+
+<script>
+
+/*
+gatttool --device=C4:7C:8D:61:9F:27 --char-read -a 0x03 --adapter=hci0
+Characteristic value/descriptor: 46 6c 6f 77 65 72 20 6d 61 74 65
+["F", "l", "o", "w", "e", "r", " ", "m", "a", "t", "e"]
+
+gatttool --device=C4:7C:8D:61:9F:27 --char-read -a 0x038 --adapter=hci0
+Characteristic value/descriptor: 4a 10 32 2e 36 2e 32
+Characteristic value/descriptor: 61 10 32 2e 36 2e 32
+Characteristic value/descriptor: 5f 10 32 2e 36 2e 32 
+
+gatttool --device=C4:7C:8D:61:9F:27 --char-read -a 0x035 --adapter=hci0
+Characteristic value/descriptor: b8 00 00 1b 0c 00 00 3b 68 07 00 00 00 00 00 00 
+
+$ gatttool --device=C4:7C:8D:61:9F:27 --char-read -a 0x35 --adapter=hci0
+Characteristic value/descriptor: be 00 00 a7 0b 00 00 3a 50 07 00 00 00 00 00 00
+Characteristic value/descriptor: a8 00 00 e7 06 00 00 3d 6f 08 00 00 00 00 00 00 
+
+*/
+ 
+/*
+
+0x03 = 46 6c 6f 77 65 72 20 6d 61 74 65 = ["F", "l", "o", "w", "e", "r", " ", "m", "a", "t", "e"]
+
+0x038 = 4a 10 32 2e 36 2e 32 = 1bajt = bateria, reszta firmave 
+
+0x35 = be 00 00 a7 0b 00 00 3a 50 07 00 00 00 00 00 00 = ?wyniki
+
+
+
+*/ 
+
+
+var arr=[
+//'46 6c 6f 77 65 72 20 6d 61 74 65',
+//'4a 10 32 2e 36 2e 32',
+//'61 10 32 2e 36 2e 32',
+//'5f 10 32 2e 36 2e 32',
+//'f2 00 00 79 00 00 00 10 65 00 00 00 00 00 00 00',	// przyklad
+//'b8 00 00 1b 0c 00 00 3b 68 07 00 00 00 00 00 00',
+//'be 00 00 a7 0b 00 00 3a 50 07 00 00 00 00 00 00',
+//'bb 00 00 ae 0a 00 00 3b 63 07 00 00 00 00 00 00',	//{"m": 59, "c": 1885, "b": 94, "l": 3193, "t": 18.9}
+//'bd 00 00 37 0d 00 00 3b 67 07 00 00 00 00 00 00',	//{"t": 18.9, "c": 1885, "l": 4634, "b": 91, "m": 59}
+'ba 00 00 e6 05 00 00 3b b0 07 00 00 00 00 00 00', 	//{"m": 59, "l": 1510, "t": 18.6, "b": 81, "c": 1968}
+'a8 00 00 e7 06 00 00 3d 6f 08 00 00 00 00 00 00'
+];
+console.log(arr);
+console.log("");
+var obj={}
+arr.forEach(function(ar){
+	var ar = ar.split(' ');
+	
+	var wyniki =[];
+	var tx ='';
+	ar.forEach(function(a){
+		var n = parseInt(a,16);
+		var c = String.fromCharCode(n);
+		wyniki.push(n);
+		tx +=c;
+	});
+	//console.log(ar);
+	console.log(wyniki);
+	//console.log(tx);
+
+	obj   = {}
+	
+	//obj.w01 = wyniki[0] + 256*wyniki[1];
+	//obj.w23 = wyniki[2] + 256*wyniki[3];
+	//obj.w45 = wyniki[4] + 256*wyniki[5];
+	//obj.w67 = wyniki[6] + 256*wyniki[7];
+	//obj.w89 = wyniki[8] + 256*wyniki[9];
+	
+	obj.t   = (wyniki[0] + 256*wyniki[1])/10;
+	//         wyniki[2] // chyba znak temperatury
+	obj.l   =  wyniki[3] + 256*wyniki[4];
+	obj.w56 =  wyniki[5] + 256*wyniki[6];
+	obj.m   =  wyniki[7];
+	obj.c   =  wyniki[8] + 256*wyniki[9];
+	console.log("");
+	console.log(obj);
+	
+/*
+   def _parse_data(self):
+        data = self._cache
+        res = {}
+        res[MI_TEMPERATURE] = float(data[1] * 256 + data[0]) / 10
+        res[MI_MOISTURE] = data[7]
+        res[MI_LIGHT] = data[4] * 256 + data[3]
+        res[MI_CONDUCTIVITY] = data[9] * 256 + data[8]
+        return res
+*/		
+	
+	
+});
+console.log('------');
+//console.log({"m": 59, "c": 1885, "b": 94, "l": 3193, "t": 18.9});
+//console.log('org=',{"t": 18.9, "c": 1885, "l": 4634, "b": 91, "m": 59});
+console.log('org=',{"m": 59, "l": 1510, "t": 18.6, "b": 81, "c": 1968});
+console.log('myy=',obj);
+document.getElementById('info').innerHTML = JSON.stringify(obj);
+</script>

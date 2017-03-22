@@ -1,11 +1,11 @@
 # node-red-contrib-flora
 Node-red for Xiaomi Flora mate with BLE
 
-<code>cd ~/.node-red</code>
+<pre>cd ~/.node-red</pre>
 <pre>mkdir red</pre>
-<code>cd red</code>
+<pre>cd red</pre>
 
-<code>
+<pre>
 
 sudo git clone https://github.com/ZnakZorro/node-red-contrib-flora.git
 
@@ -20,4 +20,4 @@ cd ~/.node-red
 sudo npm link node-red-contrib-flora
 
 
-</code>
+</pre>
